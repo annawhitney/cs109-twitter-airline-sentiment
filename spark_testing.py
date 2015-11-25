@@ -6,6 +6,7 @@ from pattern.en import parse
 from pattern.en import pprint
 from pattern.vector import stem, PORTER, LEMMA
 from nltk.corpus import stopwords
+from gensim import corpora
 
 # adapted from HW5
 def get_parts(thetext):
@@ -13,6 +14,7 @@ def get_parts(thetext):
     stop = stopwords.words('english')
     regex1=re.compile(r"\.{2,}")
     regex2=re.compile(r"\-{2,}")
+    punctuation = list('.,;:!?()[]{}`''\"@#$^&*+-|=~_')
     thetext=re.sub(regex1, ' ', thetext)
     thetext=re.sub(regex2, ' ', thetext)
     nouns=[]
@@ -52,3 +54,9 @@ if __name__ == '__main__':
 
     # parse tweets to nouns & adjectives
     tweets_n_a = tweets_text.map(get_parts)
+    tweets_nouns = tweets_n_a.keys()
+    all_nouns = tweets_nouns.flatMap(lambda l: l).toLocalIterator()
+    tweets_adjs = tweets_n_a.values()
+
+    # feed nouns into gensim
+    dictionary = corpora.Dictionary(all_nouns)
