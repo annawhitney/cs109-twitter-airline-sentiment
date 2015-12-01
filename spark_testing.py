@@ -9,12 +9,11 @@ from nltk.corpus import stopwords
 from gensim import corpora
 
 # adapted from HW5
-def get_parts(thetext):
+def get_parts(thetext, punctuation):
     # generate stopwords list & regexes for 2+ periods or 2+ dashes
     stop = stopwords.words('english')
     regex1=re.compile(r"\.{2,}")
     regex2=re.compile(r"\-{2,}")
-    punctuation = list('.,;:!?()[]{}`''\"@#$^&*+-|=~_')
     thetext=re.sub(regex1, ' ', thetext)
     thetext=re.sub(regex2, ' ', thetext)
     nouns=[]
@@ -53,10 +52,14 @@ if __name__ == '__main__':
     tweets_text = tweets.map(lambda t: t['text'])
 
     # parse tweets to nouns & adjectives
-    tweets_n_a = tweets_text.map(get_parts)
+    punc = list('.,;:!?()[]{}`''\"@#$^&*+-|=~_')
+    tweets_n_a = tweets_text.map(lambda t: get_parts(t, punc))
     tweets_nouns = tweets_n_a.keys()
     all_nouns = tweets_nouns.flatMap(lambda l: l).toLocalIterator()
     tweets_adjs = tweets_n_a.values()
+
+    # get words out for sentiment analysis
+    sentiment_words = tweets_text.map(lambda t: t.strip(punc).split())
 
     # feed nouns into gensim
     dictionary = corpora.Dictionary(all_nouns)
