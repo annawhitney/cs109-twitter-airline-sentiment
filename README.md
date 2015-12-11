@@ -1,7 +1,7 @@
 # cs109-twitter-airline-sentiment
 CS109 Final Project - Anna Whitney, Nicholas Ruta, Ayin Mokrivala
 
-We used plot.ly for our visualizations. To ensure that the plots display correctly, please view our Ipython notebook as an html page here - https://www.dropbox.com/s/6vnhuv408k5r16d/ProcessNotebook.html?dl=0
+We used plot.ly for our visualizations. To ensure that the plots display correctly, please view our Ipython notebook as an html page here - https://dl.dropboxusercontent.com/s/6vnhuv408k5r16d/ProcessNotebook.html
 
 Our github repository which contains our Project Notebook and all associated files - https://github.com/annawhitney/cs109-twitter-airline-sentiment
 
